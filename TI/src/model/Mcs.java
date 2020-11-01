@@ -64,7 +64,7 @@ public class Mcs{
 		if(users[userNumber]!=null){
 			messages[0]=users[userNumber].getName();
 			messages[1]=users[userNumber].getAge();
-			//messages[2]=users[userNumber].getCategory();
+			messages[2]=users[userNumber].showCategory();
 		}
 		return messages;
 	}//end showUsers

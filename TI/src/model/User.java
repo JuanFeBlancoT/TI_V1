@@ -29,8 +29,18 @@ public class User{
 		return age;
 	}
 	
-		/*public String getCategory(){
-		return category;
-	}*/
+		public String showCategory(){
+			String categoryS="";
+			if(category==Category.NEWBIE){
+				categoryS="Newbie";
+			}else if(category==Category.LITTLE_COTRIBUTOR){
+				categoryS="Little contributor";
+			}else if(category==Category.MILD_CONTRIBUTOR){
+				categoryS="Mild contributor";
+			}else if(category==Category.STAR_CONTRIBUTOR){
+				categoryS="Star contributor";
+			}
+			return categoryS;
+	}
 	
 }

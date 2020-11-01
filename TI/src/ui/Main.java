@@ -36,7 +36,7 @@ public class Main{
 		}
 		
 		//showUsers
-		showUsers(mcs1);
+		showUsers(mcs1, control);
 		
 		//addSong
 		addSong(mcs1);
@@ -80,9 +80,10 @@ public class Main{
 		
 	}//end createUser
 	
-	public static void showUsers(Mcs mcsx){
+	public static void showUsers(Mcs mcsx, int totUsers){
 		
-		for(int i=0;i<3;i++){
+		for(int i=0;i<totUsers;i++){
+
 			String messagesx[]=new String[3];
 			messagesx = mcsx.showUsers(i);
 			System.out.print("\n************** User **************\n");
@@ -105,6 +106,7 @@ public class Main{
 		int duration=sc.nextInt();sc.nextLine();
 		
 		messagex=mcsx.addSong(title,artist,date,duration);
+		
 		System.out.print(messagex);
 	}
 }
