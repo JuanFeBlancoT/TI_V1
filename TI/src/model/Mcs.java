@@ -174,7 +174,14 @@ public class Mcs{
 				message=collection[playIndex].addSong(title, artist, date, songGenre, duration);
 			}
 		}
-
+		updatePlaylist(playIndex, duration, songGenre);
+		
 		return message;
 	}//end findPlaylist
+	
+	public void updatePlaylist(int playIndex, int duration, String genre){
+		
+		collection[playIndex].setDuration(collection[playIndex].getDuration()+duration);
+		//collection[playIndex].setGenre();
+	}
 }

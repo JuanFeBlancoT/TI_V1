@@ -36,4 +36,16 @@ public abstract class Playlist{
 		return name;
 	}
 	
+	public int getDuration(){
+		return duration;
+	}
+	
+	public void setDuration(int duration){
+		this.duration=duration;
+	}
+	
+	public void setGenre (String genre){
+		
+	}
+	
 }
