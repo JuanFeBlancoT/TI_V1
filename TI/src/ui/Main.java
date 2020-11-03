@@ -216,7 +216,8 @@ public class Main{
 			if(answerPl.equalsIgnoreCase("yes")){
 				System.out.print("\nType the name of the playlist you wish to add this song: ");
 				answerPl=sc.nextLine();
-				messageY=mcsx.findPlaylist(answerPl, title,artist,date,s_genre,duration);
+				int playIndex=mcsx.findPlaylist(answerPl);
+				messageY=mcsx.addSongToPlaylist(playIndex, title,artist,date,s_genre,duration);
 			}
 			System.out.print(messageY);
 		}
@@ -285,5 +286,16 @@ public class Main{
 		
 		System.out.print(messagex);
 	}//end createPlaylist
+	
+	/*public void gradeP(Mcs mcsx){
+		String answer
+		System.out.print("\nDo you want to grade a playlist? yes or not ");
+		answer=sc.nextLine();
+		if(answer.equalsIgnoreCase("yes")){
+			System.out.print("\nType the name of the public playlist: ");
+			answer=sc.nextLine();
+			
+		}
+	}*/
 	
 }

@@ -162,26 +162,39 @@ public class Mcs{
 		return message;
 	}//end createPlaylist public
 	
-	public String findPlaylist(String playlistName, String title, String artist, String date, String songGenre, int duration){
+	public int findPlaylist(String playlistName){
 		boolean exist=false;
 		int playIndex=0;
-		String message="Playlist does not exist";
 		
 		for(int i=0;i<collection.length && !exist;i++){
 			if(collection[i]!=null && collection[i].getName().equals(playlistName)){
 				exist=true;
 				playIndex=i;
-				message=collection[playIndex].addSong(title, artist, date, songGenre, duration);
 			}
 		}
+		
+		return playIndex;
+	}//end findPlaylist
+	
+	public String addSongToPlaylist(int playIndex, String title, String artist, String date, String songGenre, int duration){
+		String message="";
+		
+		message=collection[playIndex].addSong(title, artist, date, songGenre, duration);
 		updatePlaylist(playIndex, duration, songGenre);
 		
 		return message;
-	}//end findPlaylist
+	}//end addSongToPlaylist
 	
 	public void updatePlaylist(int playIndex, int duration, String genre){
 		
 		collection[playIndex].setDuration(collection[playIndex].getDuration()+duration);
-		//collection[playIndex].setGenre();
+		//collection[playIndex].addGenre(genre);
 	}
+	
+	/*public void gradeP(String playlistName){
+		if(){
+			
+		}
+	}*/
+	
 }
