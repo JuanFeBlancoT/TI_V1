@@ -7,7 +7,7 @@ public class Song{
 	private String date;
 	private int duration;
 	
-	//relations
+	//Relations
 	private Genre genre;
 	
 	//Methods
@@ -54,20 +54,6 @@ public class Song{
 		return categoryS;
 	}//end showCategory
 	
-	public String calculateTime(int totTime){
-		int mins=0;
-		int segs=0;
-		if(totTime>=60){
-			mins=(int)Math.floor(totTime/60);
-			totTime-=(mins*60);
-		}
-
-		segs=totTime;
-		String message=mins+":"+segs;
-		System.out.println(message);
-		return message;
-	}//end calculateTime
-	
 	public String getTime(){
 		int mins=0;
 		int segs=0;
@@ -85,6 +71,6 @@ public class Song{
 		}
 		System.out.println(message);
 		return message;
-	}
+	}//end getTime
 	
 }

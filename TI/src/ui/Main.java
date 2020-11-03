@@ -16,6 +16,9 @@ public class Main{
 		boolean noMoreS=false;
 		int controlS=0;
 		boolean validS=false;
+		boolean noMoreP=false;
+		int controlP=0;
+		boolean validP=false;
 		
 		//create Mcs
 		Mcs mcs1=createMcs();
@@ -42,12 +45,13 @@ public class Main{
 		showUsers(mcs1, control);
 		
 		//addSong
+		
 		while(noMoreS==false && controlS<mcs1.MAX_SONGS){
 			String answerS;
 			System.out.print("\nDo you want to add a song? yer or not: ");
 			answerS=sc.nextLine();
 			if(answerS.equalsIgnoreCase("yes")){
-				addSong(mcs1, control);
+				addSong(mcs1, control, controlP);
 				controlS++;
 			}else{
 				noMoreS=true;
@@ -57,11 +61,45 @@ public class Main{
 			System.out.println("\nCant add more songs\n");
 		}
 		
-		//showUsers(mcs1, control);
 		
-		//show songs
+		//showUsers(mcs1, control);
 		System.out.println("controlS: "+controlS);
 		showSongs(mcs1, controlS);
+		
+		//create playlist
+		while(noMoreP==false && controlP<mcs1.MAX_PLAYLISTS){
+			String answerP;
+			System.out.print("\nDo you want to add a playlist? yer or not: ");
+			answerP=sc.nextLine();
+			if(answerP.equalsIgnoreCase("yes")){
+				createPlaylist(mcs1);
+				controlP++;
+			}else{
+				noMoreP=true;
+			}
+		}
+		if(controlP==mcs1.MAX_SONGS){
+			System.out.println("\nCant add more songs\n");
+		}
+		//repeat addsong
+		noMoreS=false;
+		while(noMoreS==false && controlS<mcs1.MAX_SONGS){
+			String answerS;
+			System.out.print("\nDo you want to add a song? yer or not: ");
+			answerS=sc.nextLine();
+			if(answerS.equalsIgnoreCase("yes")){
+				addSong(mcs1, control,controlP);
+				controlS++;
+			}else{
+				noMoreS=true;
+			}
+		}
+		if(controlS==mcs1.MAX_SONGS){
+			System.out.println("\nCant add more songs\n");
+		}
+		
+		
+		
 	}//end main
 	
 	
@@ -116,7 +154,7 @@ public class Main{
 		}
 	}//end showUsers
 	
-	public static void addSong(Mcs mcsx, int control){
+	public static void addSong(Mcs mcsx, int control, int totPl){
 		String messagex;
 		System.out.print("\n");
 		System.out.print("Type the song title: ");
@@ -169,6 +207,19 @@ public class Main{
 			String uploader=sc.nextLine();
 			mcsx.updateCategory(uploader);
 		}
+		
+		if(totPl!=0){
+			String answerPl="";
+			String messageY="";
+			System.out.print("\nWant to add this song to a playlist? yes or not: ");
+			answerPl=sc.nextLine();
+			if(answerPl.equalsIgnoreCase("yes")){
+				System.out.print("\nType the name of the playlist you wish to add this song: ");
+				answerPl=sc.nextLine();
+				messageY=mcsx.findPlaylist(answerPl, title,artist,date,s_genre,duration);
+			}
+			System.out.print(messageY);
+		}
 	
 	}//end song
 	
@@ -184,4 +235,55 @@ public class Main{
 			System.out.println("** Genre: "+ messagesx[3]);	
 		}
 	}//end showSongs
+	
+	public static void createPlaylist(Mcs mcsx){
+		final int MAX_RU=5;
+		boolean keep=false;
+		String answer="";
+		String messagex="";
+		
+		System.out.print("\nType the playlist name: ");
+		String name=sc.nextLine();
+		
+		System.out.println("\nWhich kind of playlist do you want to create?: "+
+		"\n1. Private"+
+		"\n2. Restricted"+
+		"\n3. Public");
+		int selection=sc.nextInt();sc.nextLine();
+		
+		switch(selection){
+			case 1:
+				System.out.print("\nType the username of the user that will have access to this playlist: ");
+				String userName=sc.nextLine();
+				messagex=mcsx.createPlaylist(mcsx.MAX_SONGS, name, userName);
+			break;
+			case 2:
+				String userNames[]=new String[MAX_RU];
+				
+				System.out.print("\nType the usernames of the users that will have access to this playlist: ");
+				for(int i=0;i<MAX_RU && !keep;i++){
+					System.out.print("\nType the "+(i+1)+" username : ");
+					userNames[i]=sc.nextLine();
+					if(i<4){
+						System.out.print("Add another user to the playlist? yes or not: ");
+						answer=sc.nextLine();
+					}
+					if(!(answer.equalsIgnoreCase("yes"))){
+						keep=true;
+					}
+					if(i==(MAX_RU-1)){
+						System.out.print("\nCant add more users to this playlist");
+						keep=true;
+					}
+				}
+				messagex=mcsx.createPlaylist(mcsx.MAX_SONGS, name, userNames);
+			break;
+			case 3:
+				messagex=mcsx.createPlaylist(mcsx.MAX_SONGS, name);
+			break;
+		}
+		
+		System.out.print(messagex);
+	}//end createPlaylist
+	
 }

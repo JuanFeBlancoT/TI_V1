@@ -4,23 +4,18 @@ public class Mcs{
 	//constants
 	public final int MAX_USERS=3;
 	public final int MAX_SONGS=2;
+	public final int MAX_PLAYLISTS=2;
 	
 	//relations
 	private User users[];
 	private Song pool[];
-	//private Playlist collection[];
+	private Playlist collection[];
 	
 	public Mcs(){
 		
 		users=new User[MAX_USERS];
 		pool=new Song[MAX_SONGS];
-		
-		for(int i=0;i<users.length;i++){
-			users[i]=null;
-		}
-		for(int i=0;i<pool.length;i++){
-			pool[i]=null;
-		}
+		collection=new Playlist[MAX_PLAYLISTS];
 		
 	}
 	
@@ -113,9 +108,73 @@ public class Mcs{
 		if(pool[songNumber]!=null){
 			messages[0]=pool[songNumber].getTitle();
 			messages[1]=pool[songNumber].getArtist();
-			messages[2]=pool[songNumber].getTime();//null;//pool[songNumber].calculateTime(pool[songNumber].getDuration());
+			messages[2]=pool[songNumber].getTime();
 			messages[3]=pool[songNumber].showGenre();
 		}
 		return messages;
 	}//end showSongs
+	
+	//private playlist
+	public String createPlaylist(int maxSongs, String name, String userName){
+		
+		boolean stop=false;
+		String message="Couldnt create playlist";
+		
+		for(int i=0;i<collection.length && !stop;i++){
+			if(collection[i]==null){
+				stop=true;
+				collection[i]=new PrivatePl(maxSongs, name, userName);
+				message="Private playlist created succesfully";
+			}
+		}
+		return message;
+	}//end createPlaylist private
+	
+	//Restricted playlist
+	public String createPlaylist(int maxSongs, String name, String[] userNames){
+		
+		boolean stop=false;
+		String message="Couldnt create playlist";
+		
+		for(int i=0;i<collection.length && !stop;i++){
+			if(collection[i]==null){
+				stop=true;
+				collection[i]=new RestrictedPl(maxSongs, name, userNames);
+				message="Restricted playlist created succesfully";
+			}
+		}
+		return message;
+	}//end createPlaylist restricted
+	
+	//Public playlist
+	public String createPlaylist(int maxSongs, String name){
+		
+		boolean stop=false;
+		String message="Couldnt create playlist";
+		
+		for(int i=0;i<collection.length && !stop;i++){
+			if(collection[i]==null){
+				stop=true;
+				collection[i]=new PublicPl(maxSongs, name);
+				message="Public playlist created succesfully";
+			}
+		}
+		return message;
+	}//end createPlaylist public
+	
+	public String findPlaylist(String playlistName, String title, String artist, String date, String songGenre, int duration){
+		boolean exist=false;
+		int playIndex=0;
+		String message="Playlist does not exist";
+		
+		for(int i=0;i<collection.length && !exist;i++){
+			if(collection[i]!=null && collection[i].getName().equals(playlistName)){
+				exist=true;
+				playIndex=i;
+				message=collection[playIndex].addSong(title, artist, date, songGenre, duration);
+			}
+		}
+
+		return message;
+	}//end findPlaylist
 }
