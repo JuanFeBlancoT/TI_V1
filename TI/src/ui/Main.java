@@ -98,7 +98,11 @@ public class Main{
 			System.out.println("\nCant add more songs\n");
 		}
 		
+		gradeP(mcs1);
 		
+		gradeP(mcs1);
+		
+		gradeP(mcs1);
 		
 	}//end main
 	
@@ -287,15 +291,33 @@ public class Main{
 		System.out.print(messagex);
 	}//end createPlaylist
 	
-	/*public void gradeP(Mcs mcsx){
-		String answer
-		System.out.print("\nDo you want to grade a playlist? yes or not ");
+	public static void gradeP(Mcs mcsx){
+		String answer;
+		System.out.print("\nDo you want to grade a playlist? yes or not : ");
 		answer=sc.nextLine();
+		
 		if(answer.equalsIgnoreCase("yes")){
-			System.out.print("\nType the name of the public playlist: ");
+			System.out.print("Type the name of the public playlist: ");
 			answer=sc.nextLine();
+			int playIndex=mcsx.findPlaylist(answer);
+			if(playIndex!=-1){
+				boolean valid=mcsx.confirmP(playIndex);
+				
+				if(valid==true){
+					System.out.print("Type the score, from 1 to 5: ");
+					int score=sc.nextInt();sc.nextLine();
+				
+					if(score<1 && score>5){
+						System.out.print("\n INVALID SCORE: ");
+					}else{
+						mcsx.updateScore(playIndex, score);
+					}
+				}
+			}else{
+				System.out.print("Not a public playlist");
+			}
 			
 		}
-	}*/
+	}//end gradeP
 	
 }

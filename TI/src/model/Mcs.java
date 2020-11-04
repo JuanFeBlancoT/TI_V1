@@ -164,7 +164,7 @@ public class Mcs{
 	
 	public int findPlaylist(String playlistName){
 		boolean exist=false;
-		int playIndex=0;
+		int playIndex=-1;
 		
 		for(int i=0;i<collection.length && !exist;i++){
 			if(collection[i]!=null && collection[i].getName().equals(playlistName)){
@@ -191,10 +191,19 @@ public class Mcs{
 		//collection[playIndex].addGenre(genre);
 	}
 	
-	/*public void gradeP(String playlistName){
-		if(){
-			
+	public boolean confirmP(int playIndex){
+		
+		boolean valid=false;
+		
+		if(collection[playIndex] instanceof PublicPl){
+			valid=true;
+		}else{
+			valid=false;
 		}
-	}*/
+		return valid;
+	}//end confirmP
 	
+	public void updateScore(int playIndex, int score){
+		((PublicPl)collection[playIndex]).updateScore(score);
+	}
 }
