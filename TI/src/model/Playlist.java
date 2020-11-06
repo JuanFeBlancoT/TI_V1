@@ -14,7 +14,6 @@ public abstract class Playlist{
 		this.name=name;
 		duration=0;
 		genres=new Genre[genreSize];
-		//genres[0]=Genre.UNKNOWN;
 		
 		songs=new Song[maxSongs];
 		

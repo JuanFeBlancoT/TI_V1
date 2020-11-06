@@ -152,17 +152,12 @@ public class Main{
 	}//end createUser
 	
 	public static void showUsers(Mcs mcsx, int totUsers){
-		
 		for(int i=0;i<totUsers;i++){
 
-			String messagesx[]=new String[3];
-			messagesx = mcsx.showUsers(i);
-			System.out.print("\n************** User **************\n");
-			System.out.println("** userName: "+ messagesx[0]);
-			System.out.println("** Age: "+ messagesx[1]);
-			System.out.println("** Category: "+ messagesx[2]);
+			String messagex = mcsx.showUsers(i);
+			System.out.println(messagex);
 		}
-	}//end showUsers
+	}//end showSongs
 	
 	public static void addSong(Mcs mcsx, int control, int totPl){
 		String messagex;
@@ -220,16 +215,11 @@ public class Main{
 			
 	}//end song
 	
-	public static void showSongs(Mcs mcsx, int totSongs){
+		public static void showSongs(Mcs mcsx, int totSongs){
 		for(int i=0;i<totSongs;i++){
 
-			String messagesx[]=new String[4];
-			messagesx = mcsx.showSongs(i);
-			System.out.print("\n************** Song **************\n");
-			System.out.println("** Title: "+ messagesx[0]);
-			System.out.println("** Artist: "+ messagesx[1]);
-			System.out.println("** Duration: "+ messagesx[2]);
-			System.out.println("** Genre: "+ messagesx[3]);	
+			String messagex = mcsx.showSongs(i);
+			System.out.println(messagex);
 		}
 	}//end showSongs
 	

@@ -54,16 +54,10 @@ public class Mcs{
 		return message;
 	}//end createUser
 	
-	public String[] showUsers(int userNumber){
-		String messages[]=new String[3];
-		
-		if(users[userNumber]!=null){
-			messages[0]=users[userNumber].getName();
-			messages[1]=users[userNumber].getAge();
-			messages[2]=users[userNumber].showCategory();
-		}
-		return messages;
-	}//end showUsers
+	public String showUsers(int userNumber){
+		String message=users[userNumber].showUser();
+		return message;
+	}//end showSongs
 	
 	public String addSong(String title, String artist, String date, String songGenre, int duration){
 		
@@ -103,15 +97,9 @@ public class Mcs{
 		
 	}//end updateCategory
 	
-	public String[] showSongs(int songNumber){
-		String messages[]=new String[4];
-		if(pool[songNumber]!=null){
-			messages[0]=pool[songNumber].getTitle();
-			messages[1]=pool[songNumber].getArtist();
-			messages[2]=pool[songNumber].getTime();
-			messages[3]=pool[songNumber].showGenre();
-		}
-		return messages;
+	public String showSongs(int songNumber){
+		String message=pool[songNumber].showSong();
+		return message;
 	}//end showSongs
 	
 	//private playlist

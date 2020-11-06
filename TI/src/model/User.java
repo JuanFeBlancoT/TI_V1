@@ -37,9 +37,9 @@ public class User{
 		sharedS=plus;
 	}
 	
-	/*public Category getCategory(){
+	public Category getCategory(){
 		return category;
-	}*/
+	}
 	
 	public String showCategory(){
 		String categoryS="";
@@ -67,6 +67,16 @@ public class User{
 			category=Category.STAR_CONTRIBUTOR;
 		}
 	}//end setCategory
+	
+		public String showUser(){
+						
+		String message=("\n************** User **************"+
+		"\n** Name: "+ getName() +
+		"\n** Age: "+ getAge() + 
+		"\n** Category: "+ showCategory());
+			
+		return message;
+	}//end showSongs
 	
 	
 	

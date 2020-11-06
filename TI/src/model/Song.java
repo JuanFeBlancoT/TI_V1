@@ -69,8 +69,17 @@ public class Song{
 		}else{
 			message=mins+":"+segs;
 		}
-		System.out.println(message);
 		return message;
 	}//end getTime
+	
+	public String showSong(){
+						
+		String message=("\n************** Song **************"+
+		"\n** Title: "+ getTitle() +
+		"\n** Duration: "+ getTime() + 
+		"\n** Genre: "+ showGenre());
+			
+		return message;
+	}//end showSongs
 	
 }

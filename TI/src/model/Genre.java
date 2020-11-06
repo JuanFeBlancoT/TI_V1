@@ -6,6 +6,5 @@ public enum Genre{
 	CLASSIC_MUSIC,
 	REGGAE,
 	SALSA,
-	METAL,
-	UNKNOWN
+	METAL
 }
