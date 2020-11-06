@@ -176,21 +176,37 @@ public class Mcs{
 		return playIndex;
 	}//end findPlaylist
 	
-	public String addSongToPlaylist(int playIndex, String title, String artist, String date, String songGenre, int duration){
-		String message="";
+	public boolean findSong(String songName){
+		boolean exist=false;
 		
-		message=collection[playIndex].addSong(title, artist, date, songGenre, duration);
-		updatePlaylist(playIndex, duration, songGenre);
+		for(int i=0;i<pool.length && !exist;i++){
+			if(pool[i]!=null && pool[i].getTitle().equals(songName)){		//poner el condicional de != en el for 
+				exist=true;
+			}
+		}
+		
+		return exist;
+	}//end findSong
+	
+	public String addSongToPlaylist(String songName, int playIndex){
+		
+		String message="";
+		boolean exist=false;
+		int songIndex=-1;
+		
+		for(int i=0;i<pool.length && !exist;i++){
+			if(pool[i]!=null && pool[i].getTitle().equals(songName)){
+				exist=true;
+				songIndex=i;
+			}
+		}
+		
+		message=collection[playIndex].addSong(pool[songIndex]);
+		collection[playIndex].updatePlaylist(pool[songIndex]);
 		
 		return message;
 	}//end addSongToPlaylist
-	
-	public void updatePlaylist(int playIndex, int duration, String genre){
-		
-		collection[playIndex].setDuration(collection[playIndex].getDuration()+duration);
-		//collection[playIndex].addGenre(genre);
-	}
-	
+
 	public boolean confirmP(int playIndex){
 		
 		boolean valid=false;
@@ -205,5 +221,10 @@ public class Mcs{
 	
 	public void updateScore(int playIndex, int score){
 		((PublicPl)collection[playIndex]).updateScore(score);
+	}
+	
+	public String showPlaylist(int playlistIndex){
+		String message=collection[playlistIndex].showPlaylist();
+		return message;
 	}
 }

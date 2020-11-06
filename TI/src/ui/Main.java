@@ -63,7 +63,6 @@ public class Main{
 		
 		
 		//showUsers(mcs1, control);
-		System.out.println("controlS: "+controlS);
 		showSongs(mcs1, controlS);
 		
 		//create playlist
@@ -97,12 +96,19 @@ public class Main{
 		if(controlS==mcs1.MAX_SONGS){
 			System.out.println("\nCant add more songs\n");
 		}
+		//add song to playlist
+		addSongToPlaylist(mcs1);
+		addSongToPlaylist(mcs1);
+		
+		showPlaylist(mcs1, controlP);
 		
 		gradeP(mcs1);
 		
 		gradeP(mcs1);
 		
 		gradeP(mcs1);
+		
+		
 		
 	}//end main
 	
@@ -211,21 +217,7 @@ public class Main{
 			String uploader=sc.nextLine();
 			mcsx.updateCategory(uploader);
 		}
-		
-		if(totPl!=0){
-			String answerPl="";
-			String messageY="";
-			System.out.print("\nWant to add this song to a playlist? yes or not: ");
-			answerPl=sc.nextLine();
-			if(answerPl.equalsIgnoreCase("yes")){
-				System.out.print("\nType the name of the playlist you wish to add this song: ");
-				answerPl=sc.nextLine();
-				int playIndex=mcsx.findPlaylist(answerPl);
-				messageY=mcsx.addSongToPlaylist(playIndex, title,artist,date,s_genre,duration);
-			}
-			System.out.print(messageY);
-		}
-	
+			
 	}//end song
 	
 	public static void showSongs(Mcs mcsx, int totSongs){
@@ -291,6 +283,37 @@ public class Main{
 		System.out.print(messagex);
 	}//end createPlaylist
 	
+	//cambiar nombres
+	public static void addSongToPlaylist(Mcs mcsx){
+		String answer="";
+		String messageY="";
+		
+		System.out.print("\nDo you want to add a song to a playlist? yes or not: ");
+		answer=sc.nextLine();
+		
+		if(answer.equalsIgnoreCase("yes")){
+			System.out.print("Type the name of the song (from the pool): ");
+			answer=sc.nextLine();
+			boolean exist=mcsx.findSong(answer);
+			
+			if(exist){
+				
+				System.out.print("Type the name of the playlist you wish to add this song to: ");
+				String answer2=sc.nextLine();
+				int playIndex=mcsx.findPlaylist(answer2);
+				if(playIndex!=-1){
+					messageY=mcsx.addSongToPlaylist(answer, playIndex);
+				}else{
+					System.out.print("This playlist does not exist: ");
+				}
+				//mcsx.addSongToPlaylist();
+			}else{
+				System.out.print("This song does not exist");
+			}
+			System.out.print(messageY);
+		}
+	}//end addSongToPlaylist
+	
 	public static void gradeP(Mcs mcsx){
 		String answer;
 		System.out.print("\nDo you want to grade a playlist? yes or not : ");
@@ -319,5 +342,13 @@ public class Main{
 			
 		}
 	}//end gradeP
+	
+	public static void showPlaylist(Mcs mcsx, int totPlaylists){
+		for(int i=0;i<totPlaylists;i++){
+
+			String message=mcsx.showPlaylist(i);
+			System.out.println(message);
+		}
+	}//end showPlaylist
 	
 }

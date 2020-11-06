@@ -2,7 +2,7 @@ package model;
 
 public abstract class Playlist{
 	//attributes
-	private int genreC=6;
+	private int genreSize=6;
 	private String name;
 	private int duration;
 	//Relations
@@ -13,13 +13,14 @@ public abstract class Playlist{
 	public Playlist(int maxSongs, String name){
 		this.name=name;
 		duration=0;
-		genres=new Genre[genreC];
-		genres[0]=Genre.UNKNOWN;
+		genres=new Genre[genreSize];
+		//genres[0]=Genre.UNKNOWN;
+		
 		songs=new Song[maxSongs];
 		
 	}
 	
-	public String addSong(String title, String artist, String date, String songGenre, int duration){
+	public String addSong(Song newSong){
 		
 		boolean stop=false;
 		String message="Couldnt add song";
@@ -27,8 +28,8 @@ public abstract class Playlist{
 		for(int i=0;i<songs.length && !stop;i++){
 			if(songs[i]==null){
 				stop=true;
-				songs[i]=new Song(title, artist, date, songGenre, duration);
-				message="\nSong added succesfully to the playlist";
+				songs[i]=newSong;
+				message="\nSong added succesfully to the playlist ";
 			}
 		}
 		return message;
@@ -46,36 +47,69 @@ public abstract class Playlist{
 		this.duration=duration;
 	}
 	
-	/*public void addGenre (String genre){
-		
-		String playGenre="";
-		if(genre==Genre.ROCK){
-			playGenre="Rock";
-		}else if(genre==Genre.HIP_HOP){
-			playGenre="Hip hop";
-		}else if(genre==Genre.CLASSIC_MUSIC){
-			playGenre="Classic music";
-		}else if(genre==Genre.REGGAE){
-			playGenre="Reggea";
-		}else if(genre==Genre.SALSA){
-			playGenre="Salsa";
-		}else if(genre==Genre.METAL){
-			playGenre="Metal";
-		}
-		
-		for(int i=0;i<genres.length;i++){
-			if(genres[i]=Genre.ROCK){
-				
-			}
-			genres[0]=Genre.valueOf(playGenre);
-		}
+	public void updatePlaylist(Song upSong){
+		setDuration(getDuration()+upSong.getDuration());
+		updateGenre(upSong);
 		
 		
-
-	}*/
+	}
 	
-	/*public String toString(){
+	public void updateGenre(Song upSong){
+		
+		boolean stop=false;
+		boolean stop2=false;
+		
+		for(int i=0;i<genres.length && !stop;i++){
+			if(genres[i]!=null && genres[i]==upSong.getGenre()){
+				stop=true;
+			}
+		}
+		for(int j=0;j<genres.length && !stop2;j++){
+			if(stop==false && genres[j]==null){
+				stop2=true;
+				genres[j]=upSong.getGenre();
+			}
+		}
+		
+	}//end updateGenre
+	
+	public String getTime(){
+		
+		int mins=0;
+		int segs=0;
 		String message="";
-	}*/
+		
+		if(duration>=60){
+			mins=(int)Math.floor(duration/60);
+			segs=duration-(mins*60);
+		}else{
+			segs=duration;
+		}
+		if(mins==0){
+			message="00:"+segs;
+		}else{
+			message=mins+":"+segs;
+		}
+		return message;
+	}//end getTime
+	
+	public String showPlaylist(){
+		
+		String genreList="";
+		
+		for(int i=0;i<genres.length && genres[i]!=null;i++){
+			genreList+= (genres[i]+", ");
+		}
+		if(genreList.equals("")){
+			genreList="UNKNOWN";
+		}
+		
+		String message=("\n************** Playlist **************"+
+		"\n** Title: "+ getName() +
+		"\n** Duration: "+ getTime() + 
+		"\n** Genre: "+ genreList);
+			
+		return message;
+	}//end showPlaylist
 	
 }

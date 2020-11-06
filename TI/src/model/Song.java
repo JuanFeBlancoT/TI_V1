@@ -32,9 +32,9 @@ public class Song{
 		return duration;
 	}
 	
-	/*public Genre getGenre(){
+	public Genre getGenre(){
 		return genre;
-	}*/
+	}
 	
 	public String showGenre(){
 		String categoryS="";

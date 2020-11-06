@@ -19,11 +19,7 @@ public class PublicPl extends Playlist{
 	
 		evaluations+=1;
 		acum_scores+=score;
-		double totalScore=acum_scores/evaluations;
-		System.out.println(totalScore);
-		System.out.println(evaluations);
-		System.out.println(acum_scores);
-		
+		double totalScore=acum_scores/evaluations;		
 	}//end updateScore
 	
 }
