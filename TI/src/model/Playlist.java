@@ -2,7 +2,7 @@ package model;
 
 public abstract class Playlist{
 	//attributes
-	private int genreC=1;
+	private int genreC=6;
 	private String name;
 	private int duration;
 	//Relations
