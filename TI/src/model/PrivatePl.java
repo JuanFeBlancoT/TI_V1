@@ -2,15 +2,14 @@ package model;
 
 public class PrivatePl extends Playlist{
 	
-	//attributes
-	private String userName;
 	//relations
 	private User onlyUser;
 	
 	//Methods
-	public PrivatePl(int maxSongs, String name, String userName){
+	public PrivatePl(int maxSongs, String name, User user){
 		super(maxSongs, name);
-		this.userName=userName;
+		onlyUser=user;
 	}
+	
 
 }

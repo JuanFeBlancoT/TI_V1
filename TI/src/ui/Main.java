@@ -71,14 +71,13 @@ public class Main{
 			System.out.print("\nDo you want to add a playlist? yer or not: ");
 			answerP=sc.nextLine();
 			if(answerP.equalsIgnoreCase("yes")){
-				createPlaylist(mcs1);
-				controlP++;
+				controlP+=createPlaylist(mcs1);
 			}else{
 				noMoreP=true;
 			}
 		}
 		if(controlP==mcs1.MAX_SONGS){
-			System.out.println("\nCant add more songs\n");
+			System.out.println("\nCant add more playlists\n");
 		}
 		//repeat addsong
 		noMoreS=false;
@@ -223,11 +222,12 @@ public class Main{
 		}
 	}//end showSongs
 	
-	public static void createPlaylist(Mcs mcsx){
+	public static int createPlaylist(Mcs mcsx){
 		final int MAX_RU=5;
 		boolean keep=false;
 		String answer="";
 		String messagex="";
+		int created=0;
 		
 		System.out.print("\nType the playlist name: ");
 		String name=sc.nextLine();
@@ -242,7 +242,14 @@ public class Main{
 			case 1:
 				System.out.print("\nType the username of the user that will have access to this playlist: ");
 				String userName=sc.nextLine();
-				messagex=mcsx.createPlaylist(mcsx.MAX_SONGS, name, userName);
+				boolean exist=mcsx.findUser(userName);
+				if(exist){
+					messagex=mcsx.createPlaylist(mcsx.MAX_SONGS, name, userName);
+					created++;
+				}else{
+						System.out.print("\nThis user does not exist. Cant create playlist: ");
+				}
+				
 			break;
 			case 2:
 				String userNames[]=new String[MAX_RU];
@@ -264,35 +271,37 @@ public class Main{
 					}
 				}
 				messagex=mcsx.createPlaylist(mcsx.MAX_SONGS, name, userNames);
+				created++;
 			break;
 			case 3:
 				messagex=mcsx.createPlaylist(mcsx.MAX_SONGS, name);
+				created++;
 			break;
 		}
-		
 		System.out.print(messagex);
+		return created;
+		
 	}//end createPlaylist
 	
 	//cambiar nombres
 	public static void addSongToPlaylist(Mcs mcsx){
-		String answer="";
 		String messageY="";
 		
 		System.out.print("\nDo you want to add a song to a playlist? yes or not: ");
-		answer=sc.nextLine();
+		String answer=sc.nextLine();
 		
 		if(answer.equalsIgnoreCase("yes")){
 			System.out.print("Type the name of the song (from the pool): ");
-			answer=sc.nextLine();
-			boolean exist=mcsx.findSong(answer);
+			String songName=sc.nextLine();
+			boolean exist=mcsx.findSong(songName);
 			
 			if(exist){
 				
 				System.out.print("Type the name of the playlist you wish to add this song to: ");
-				String answer2=sc.nextLine();
-				int playIndex=mcsx.findPlaylist(answer2);
+				String playlistName=sc.nextLine();
+				int playIndex=mcsx.findPlaylist(playlistName);
 				if(playIndex!=-1){
-					messageY=mcsx.addSongToPlaylist(answer, playIndex);
+					messageY=mcsx.addSongToPlaylist(songName, playIndex);
 				}else{
 					System.out.print("This playlist does not exist: ");
 				}
@@ -305,14 +314,14 @@ public class Main{
 	}//end addSongToPlaylist
 	
 	public static void gradeP(Mcs mcsx){
-		String answer;
+
 		System.out.print("\nDo you want to grade a playlist? yes or not : ");
-		answer=sc.nextLine();
+		String answer=sc.nextLine();
 		
 		if(answer.equalsIgnoreCase("yes")){
 			System.out.print("Type the name of the public playlist: ");
-			answer=sc.nextLine();
-			int playIndex=mcsx.findPlaylist(answer);
+			String playlistName=sc.nextLine();
+			int playIndex=mcsx.findPlaylist(playlistName);
 			if(playIndex!=-1){
 				boolean valid=mcsx.confirmP(playIndex);
 				

@@ -2,7 +2,7 @@ package model;
 
 public class Mcs{
 	//constants
-	public final int MAX_USERS=3;
+	public final int MAX_USERS=2;
 	public final int MAX_SONGS=2;
 	public final int MAX_PLAYLISTS=2;
 	
@@ -106,12 +106,19 @@ public class Mcs{
 	public String createPlaylist(int maxSongs, String name, String userName){
 		
 		boolean stop=false;
+		User songUser=null;
 		String message="Couldnt create playlist";
+		
+		for(int j=0;j<users.length && !stop;j++){
+			if(users[j]!=null && users[j].getName().equals(userName)){
+				songUser=users[j];
+			}
+		}
 		
 		for(int i=0;i<collection.length && !stop;i++){
 			if(collection[i]==null){
 				stop=true;
-				collection[i]=new PrivatePl(maxSongs, name, userName);
+				collection[i]=new PrivatePl(maxSongs, name, songUser);
 				message="Private playlist created succesfully";
 			}
 		}
