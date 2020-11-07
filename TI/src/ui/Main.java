@@ -10,127 +10,170 @@ public class Main{
 	public static void main (String[] args){
 		
 		//attributes
+		boolean menu=true;
 		
 		//Users control variables
 		int control=0; 
-		int usersAmount=0;
-		boolean noMoreU=false;
 		boolean valid=false;
 		
 		//Songs control variables
 		int controlS=0;
-		boolean noMoreS=false;
-		boolean validS=false;
 		
 		//Playlists control variables
 		int controlP=0;
-		boolean noMoreP=false;
 		boolean validP=false;
 		
+		//Start program
+				
 		//create Mcs
 		Mcs mcs1=createMcs();
 		
-		//create user
-		usersAmount+=createU(mcs1, control, noMoreU, valid);
+		//MENU
 		
-		//showUsers
-		showUsers(mcs1, usersAmount);
-		
-		//addSong
-		
-		while(noMoreS==false && controlS<mcs1.MAX_SONGS){
-			String answerS;
-			System.out.print("\nDo you want to add a song? yer or not: ");
-			answerS=sc.nextLine();
-			if(answerS.equalsIgnoreCase("yes")){
-				addSong(mcs1, control, controlP);
-				controlS++;
-			}else{
-				noMoreS=true;
+		while(menu){
+			System.out.println("\n Welcome to Mcs prototype, please chose an option from below: "+
+			"\n 1) Create user"+
+			"\n 2) Show user(s)"+
+			"\n 3) Add song to the pool of songs"+
+			"\n 4) Show song(s)"+
+			"\n 5) Create playlist"+
+			"\n 6) Add song to a playlist"+
+			"\n 7) Show playlist(s)"+
+			"\n 8) Grade a playlist"+
+			"\n 9) Exit");
+			
+			int option=sc.nextInt();sc.nextLine();
+			
+			switch(option){
+				
+				case 1:
+					System.out.println(control);
+					if(control!=mcs1.MAX_USERS){
+						control+=createU(mcs1, control, valid);
+						System.out.println(control);
+					}else{
+						System.out.println("\nCant create more users");
+					}
+						/*control+=createU(mcs1, control, valid);
+						System.out.println(control);*/
+					break;
+				case 2:
+					showUsers(mcs1, control);
+					break;
+				case 3:
+					controlS+=addS(mcs1,control, controlS);		
+					break;
+				case 4:
+					showSongs(mcs1, controlS);
+					break;
+				case 5:
+					controlP=createP(mcs1, controlP);	
+					break;
+				case 6:
+					addSongToPlaylist(mcs1);
+					break;
+				case 7:
+					showPlaylist(mcs1, controlP);
+					break;
+				case 8:
+					gradeP(mcs1);
+					break;
+				case 9:
+					System.out.println("\nBye");
+					menu=false;
+					break;
+				default:
+					System.out.println("\nError. Invalid option");
+					break;
 			}
-		}
-		if(controlS==mcs1.MAX_SONGS){
-			System.out.println("\nCant add more songs\n");
-		}
 		
+		}
+	
+		/*//1)create user
+		control+=createU(mcs1, control, valid);
 		
-		//showUsers(mcs1, control);
+		//2)showUsers
+		showUsers(mcs1, control);
+		
+		//3)addSong
+		controlS+=addS(mcs1,control, controlS);		
+		
+		//4)showSongs
 		showSongs(mcs1, controlS);
 		
-		//create playlist
-		while(noMoreP==false && controlP<mcs1.MAX_PLAYLISTS){
-			String answerP;
-			System.out.print("\nDo you want to add a playlist? yer or not: ");
-			answerP=sc.nextLine();
-			if(answerP.equalsIgnoreCase("yes")){
-				controlP+=createPlaylist(mcs1);
-			}else{
-				noMoreP=true;
-			}
-		}
-		if(controlP==mcs1.MAX_SONGS){
-			System.out.println("\nCant add more playlists\n");
-		}
-		//repeat addsong
-		noMoreS=false;
-		while(noMoreS==false && controlS<mcs1.MAX_SONGS){
-			String answerS;
-			System.out.print("\nDo you want to add a song? yer or not: ");
-			answerS=sc.nextLine();
-			if(answerS.equalsIgnoreCase("yes")){
-				addSong(mcs1, control,controlP);
-				controlS++;
-			}else{
-				noMoreS=true;
-			}
-		}
-		if(controlS==mcs1.MAX_SONGS){
-			System.out.println("\nCant add more songs\n");
-		}
-		//add song to playlist
-		addSongToPlaylist(mcs1);
+		//5)create playlist
+		controlP=createP(mcs1, controlP);	
+
+		//6)add song to playlist
 		addSongToPlaylist(mcs1);
 		
+		//7)show Playlists
 		showPlaylist(mcs1, controlP);
 		
+		//8)grade a playlist
 		gradeP(mcs1);
-		
-		gradeP(mcs1);
-		
-		gradeP(mcs1);
-		
-		showPlaylist(mcs1, controlP);
+		*/
 		
 		
 	}//end main
 	
 	
 	//methods
+	
+	/**
+	* createMcs: It creates a Mcs <br>
+	* <b> pre </b> <br>
+	* <b> pos </b> <br>
+	* @return mcsx Is the Mcs
+	*/
 	public static Mcs createMcs(){
 		Mcs mcsx=new Mcs();
 		return mcsx;
 	}//end createMcs
 	
-	public static int createU(Mcs mcs1, int control, boolean noMoreU, boolean valid){
-		while(noMoreU==false && control<mcs1.MAX_USERS){
-				String answer;
-				System.out.print("\nDo you want to create an user? yes or not: ");
-				answer=sc.nextLine();
-				if(answer.equalsIgnoreCase("yes")){
-					valid=createUser(mcs1);
-					if(valid==true){
-						control++;
+	/**
+	* createU: It asks the user how many user does he want to create and creates them <br>
+	* <b> pre </b> <br>
+	* <b> pos </b> <br>
+	* @param mcsx Is the Mcs from the package model that controls everything
+	* @param control Is the integer number that counts how many users were created 
+	* @param noMoreU Is a boolean that controls the while loop
+	* @param valid Is a boolean that validates if the username is already taken
+	* @return control Is the integer number that counts how many users were created 
+	*/
+	public static int createU(Mcs mcsx, int control, boolean valid){
+		
+		boolean noMoreU=false;
+			
+			while(noMoreU==false && control<mcsx.MAX_USERS){
+					String answer;
+					System.out.print("\nDo you want to create an user? yes or not: ");
+					answer=sc.nextLine();
+					if(answer.equalsIgnoreCase("yes")){
+						valid=createUser(mcsx);
+						if(valid==true){
+							control++;
+						}
+					}else{
+						noMoreU=true;
 					}
-				}else{
-					noMoreU=true;
 				}
-			}
-			if(control==mcs1.MAX_USERS){
-				System.out.println("\nCant create more users\n**************");
-			}
-			return control;
+				if(control==mcsx.MAX_USERS){
+					System.out.println("\nCant create more users\n");
+					
+				}
+		
+		
+		return control;
 	}
 		
+	/**
+	* createUser: It creates an user in the Mcs adding it to the users array <br>
+	* <b> pre </b> That the array of users is initialized<br>
+	* <b> pos </b> <br>
+	* @param mcsx Is the Mcs from the package model that controls everything
+	* @return valid It validates if the username is already taken
+	*/
 	public static boolean createUser(Mcs mcsx){
 		String messagex;
 		boolean valid=true;
@@ -163,6 +206,13 @@ public class Main{
 		
 	}//end createUser
 	
+	/**
+	* showUsers: It shows all created users <br>
+	* <b> pre </b> <br>
+	* <b> pos </b> <br>
+	* @param mcsx Is the Mcs from the package model that controls everything
+	* @param totUsers The integer number that represents how many users were created 
+	*/
 	public static void showUsers(Mcs mcsx, int totUsers){
 		for(int i=0;i<totUsers;i++){
 
@@ -171,7 +221,37 @@ public class Main{
 		}
 	}//end showSongs
 	
-	public static void addSong(Mcs mcsx, int control, int totPl){
+	public static int addS(Mcs mcsx, int control, int controlS){
+		
+		boolean noMoreS=false;
+		
+		while(noMoreS==false && controlS<mcsx.MAX_SONGS){
+			String answerS;
+			System.out.print("\nDo you want to add a song? yer or not: ");
+			answerS=sc.nextLine();
+			if(answerS.equalsIgnoreCase("yes")){
+				addSong(mcsx, control);
+				controlS++;
+			}else{
+				noMoreS=true;
+			}
+		}
+		if(controlS==mcsx.MAX_SONGS){
+			System.out.println("\nCant add more songs\n");
+			controlS=0;
+		}
+		return controlS;
+	}// end addS
+	
+	
+	/**
+	* addSong: It creates a new song and add it to the pool array <br>
+	* <b> pre </b> The array onf songs, called pool, must be initialized<br>
+	* <b> pos </b> <br>
+	* @param mcsx Is the Mcs from the package model that controls everything
+	* @param control Is the integer number that contains the mount of users that were created, it is used to determine if we can or not ask for the user that uploads the song 
+	*/
+	public static void addSong(Mcs mcsx, int control){
 		String messagex;
 		System.out.print("\n");
 		System.out.print("Type the song title: ");
@@ -227,7 +307,14 @@ public class Main{
 			
 	}//end song
 	
-		public static void showSongs(Mcs mcsx, int totSongs){
+	/**
+	* showSongs: It shows all songs in the pool array <br>
+	* <b> pre </b> <br>
+	* <b> pos </b> <br>
+	* @param mcsx Is the Mcs from the package model that controls everything
+	* @param totSongs Is the  integer number that contains the amount of songs created
+	*/
+	public static void showSongs(Mcs mcsx, int totSongs){
 		for(int i=0;i<totSongs;i++){
 
 			String messagex = mcsx.showSongs(i);
@@ -235,6 +322,34 @@ public class Main{
 		}
 	}//end showSongs
 	
+	public static int createP(Mcs mcsx, int controlP){
+		
+		boolean noMoreP=false;
+		
+		while(noMoreP==false && controlP<mcsx.MAX_PLAYLISTS){
+			String answerP;
+			System.out.print("\nDo you want to add a playlist? yer or not: ");
+			answerP=sc.nextLine();
+			if(answerP.equalsIgnoreCase("yes")){
+				controlP+=createPlaylist(mcsx);
+			}else{
+				noMoreP=true;
+			}
+		}
+		if(controlP==mcsx.MAX_SONGS){
+			System.out.println("\nCant add more playlists\n");
+			controlP=0;
+		}
+		return controlP;
+	}
+	
+	/**
+	* createPlaylist: It creates a playlist in the Mcs adding it to the collection array <br>
+	* <b> pre </b> That the array collection is initialized<br>
+	* <b> pos </b> <br>
+	* @param mcsx Is the Mcs from the package model that controls everything
+	* @return created Is an integer number that allow other methods to keep track of how many playlists are been created
+	*/
 	public static int createPlaylist(Mcs mcsx){
 		final int MAX_RU=5;
 		boolean keep=false;
@@ -296,7 +411,12 @@ public class Main{
 		
 	}//end createPlaylist
 	
-	//cambiar nombres
+	/**
+	* addSongToPlaylist: It adds a song to a certain playlist <br>
+	* <b> pre </b> <br>
+	* <b> pos </b> <br>
+	* @param mcsx Is the Mcs from the package model that controls everything
+	*/
 	public static void addSongToPlaylist(Mcs mcsx){
 		String messageY="";
 		
@@ -326,6 +446,12 @@ public class Main{
 		}
 	}//end addSongToPlaylist
 	
+	/**
+	* gradeP: It allows the user to rate a playlist <br>
+	* <b> pre </b> <br>
+	* <b> pos </b> <br>
+	* @param mcsx Is the Mcs from the package model that controls everything
+	*/
 	public static void gradeP(Mcs mcsx){
 
 		System.out.print("\nDo you want to grade a playlist? yes or not : ");
@@ -355,6 +481,13 @@ public class Main{
 		}
 	}//end gradeP
 	
+		/**
+	* showPlaylist: It shows all the playlist that were created <br>
+	* <b> pre </b> <br>
+	* <b> pos </b> <br>
+	* @param mcsx Is the Mcs from the package model that controls everything
+	* @param totPlaylists Is the integer number that contains the amount of playlists that were created
+	*/
 	public static void showPlaylist(Mcs mcsx, int totPlaylists){
 		for(int i=0;i<totPlaylists;i++){
 
