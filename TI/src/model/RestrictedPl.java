@@ -1,8 +1,9 @@
 package model;
 
 public class RestrictedPl extends Playlist{
-	
-	//attributes
+	//Constant
+	public final static int MAX_USERS=5;
+	//Atributes
 	private String[] userNames;
 	//relations
 	private User[] usersA;
@@ -10,7 +11,8 @@ public class RestrictedPl extends Playlist{
 	//Methods
 	public RestrictedPl(int maxSongs, String name, String[] userNames){
 		super(maxSongs, name);
-		this.userNames=userNames;	
+		usersA= new User[MAX_USERS];
+		this.userNames=userNames;
 	}
 	
 }

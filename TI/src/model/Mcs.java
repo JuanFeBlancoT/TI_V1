@@ -129,7 +129,8 @@ public class Mcs{
 	public String createPlaylist(int maxSongs, String name, String[] userNames){
 		
 		boolean stop=false;
-		String message="Couldnt create playlist";
+		String message="Couldnt create playlist";		
+		
 		
 		for(int i=0;i<collection.length && !stop;i++){
 			if(collection[i]==null){

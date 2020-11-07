@@ -11,5 +11,15 @@ public class PrivatePl extends Playlist{
 		onlyUser=user;
 	}
 	
+	
+	/*public String showPlaylist(){
+		
+		
+		String message=("\n************** Playlist **************"+
+		"\n** Title: "+ getName() +
+		"\n** Duration: "+ getTime() + 
+		"\n** Genre: "+ genreList +
+		"\n** Owner: "+ onlyUser.getName());
+	} */
 
 }
