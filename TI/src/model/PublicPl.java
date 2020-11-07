@@ -15,11 +15,23 @@ public class PublicPl extends Playlist{
 		acum_scores=0;
 	}
 	
-	public void updateScore(int score){
+	public void updateScore(int scorex){
 	
 		evaluations+=1;
-		acum_scores+=score;
-		double totalScore=acum_scores/evaluations;		
+		acum_scores+=scorex;
+		score=acum_scores/evaluations;		
 	}//end updateScore
 	
+	public double getScore(){
+		return score;
+	}
+	
+	@Override
+	public String showPlaylist(){
+		String message=super.showPlaylist();
+
+		message+="\n** Score: "+ getScore() ;
+		
+		return message;
+	} 
 }

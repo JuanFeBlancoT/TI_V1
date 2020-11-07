@@ -10,39 +10,31 @@ public class Main{
 	public static void main (String[] args){
 		
 		//attributes
+		
+		//Users control variables
+		int control=0; 
+		int usersAmount=0;
 		boolean noMoreU=false;
-		int control=0;
 		boolean valid=false;
-		boolean noMoreS=false;
+		
+		//Songs control variables
 		int controlS=0;
+		boolean noMoreS=false;
 		boolean validS=false;
-		boolean noMoreP=false;
+		
+		//Playlists control variables
 		int controlP=0;
+		boolean noMoreP=false;
 		boolean validP=false;
 		
 		//create Mcs
 		Mcs mcs1=createMcs();
 		
 		//create user
-		while(noMoreU==false && control<mcs1.MAX_USERS){
-			String answer;
-			System.out.print("\nDo you want to create an user? yes or not: ");
-			answer=sc.nextLine();
-			if(answer.equalsIgnoreCase("yes")){
-				valid=createUser(mcs1);
-				if(valid==true){
-					control++;
-				}
-			}else{
-				noMoreU=true;
-			}
-		}
-		if(control==mcs1.MAX_USERS){
-			System.out.println("\nCant create more users\n**************");
-		}
+		usersAmount+=createU(mcs1, control, noMoreU, valid);
 		
 		//showUsers
-		showUsers(mcs1, control);
+		showUsers(mcs1, usersAmount);
 		
 		//addSong
 		
@@ -107,6 +99,7 @@ public class Main{
 		
 		gradeP(mcs1);
 		
+		showPlaylist(mcs1, controlP);
 		
 		
 	}//end main
@@ -118,6 +111,26 @@ public class Main{
 		return mcsx;
 	}//end createMcs
 	
+	public static int createU(Mcs mcs1, int control, boolean noMoreU, boolean valid){
+		while(noMoreU==false && control<mcs1.MAX_USERS){
+				String answer;
+				System.out.print("\nDo you want to create an user? yes or not: ");
+				answer=sc.nextLine();
+				if(answer.equalsIgnoreCase("yes")){
+					valid=createUser(mcs1);
+					if(valid==true){
+						control++;
+					}
+				}else{
+					noMoreU=true;
+				}
+			}
+			if(control==mcs1.MAX_USERS){
+				System.out.println("\nCant create more users\n**************");
+			}
+			return control;
+	}
+		
 	public static boolean createUser(Mcs mcsx){
 		String messagex;
 		boolean valid=true;

@@ -92,8 +92,7 @@ public abstract class Playlist{
 		return message;
 	}//end getTime
 	
-	public String showPlaylist(){
-		
+	public String getGenres(){
 		String genreList="";
 		
 		for(int i=0;i<genres.length && genres[i]!=null;i++){
@@ -102,11 +101,15 @@ public abstract class Playlist{
 		if(genreList.equals("")){
 			genreList="UNKNOWN";
 		}
+		return genreList;
+	}//end getGenres
+	
+	public String showPlaylist(){
 		
 		String message=("\n************** Playlist **************"+
 		"\n** Title: "+ getName() +
 		"\n** Duration: "+ getTime() + 
-		"\n** Genre: "+ genreList);
+		"\n** Genre: "+ getGenres());						//"\n** Genre: "+ genreList);
 			
 		return message;
 	}//end showPlaylist
