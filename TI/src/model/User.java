@@ -13,6 +13,14 @@ public class User{
 	
 	
 	//methods
+	/**
+	* User: It is the constructor of the User class <br>
+	* <b> pre </b> The name cannot have spaces, the password and age should be positive integer numbers <br>
+	* <b> pos </b> <br>
+	* @param name Is the username of the user
+	* @param password Is the password of the user
+	* @param age Is age of the user
+	*/
 	public User(String name, String password, String age ){
 		this.name=name;
 		this.password=password;
@@ -41,6 +49,12 @@ public class User{
 		return category;
 	}
 	
+	/**
+	* showCategory: It takes the enum value of category and return a string with the same value but a different format <br>
+	* <b> pre </b> <br>
+	* <b> pos </b> <br>
+	* @return categoryS Is the same category but displayed different
+	*/
 	public String showCategory(){
 		String categoryS="";
 		if(category==Category.NEWBIE){
@@ -55,7 +69,13 @@ public class User{
 		return categoryS;
 	}//end showCategory
 	
-		public void setCategory(int newCategory){
+	/**
+	* setCategory: It changes the current value of the category if te conditions are met <br>
+	* <b> pre </b> newCategory must be an integer number that can be either 1,2,3 or 4 <br>
+	* <b> pos </b> <br>
+	* @param newCategory is an integer number that can be either 1,2,3 or 4
+	*/
+	public void setCategory(int newCategory){
 		
 		if(newCategory==1){
 			category=Category.NEWBIE;
@@ -68,7 +88,13 @@ public class User{
 		}
 	}//end setCategory
 	
-		public String showUser(){
+	/**
+	* showUser: It displays the informtion of the user <br>
+	* <b> pre </b> <br>
+	* <b> pos </b> <br>
+	* @return message Is the message with all the required information
+	*/
+	public String showUser(){
 						
 		String message=("\n************** User **************"+
 		"\n** Name: "+ getName() +

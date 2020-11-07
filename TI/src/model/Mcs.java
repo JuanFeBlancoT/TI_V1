@@ -2,9 +2,9 @@ package model;
 
 public class Mcs{
 	//constants
-	public final int MAX_USERS=2;
-	public final int MAX_SONGS=2;
-	public final int MAX_PLAYLISTS=2;
+	public final int MAX_USERS=10;
+	public final int MAX_SONGS=30;
+	public final int MAX_PLAYLISTS=20;
 	
 	//relations
 	private User users[];
@@ -14,7 +14,7 @@ public class Mcs{
 	/**
 	* Mcs: Its the constructor of the class Mcs <br>
 	* <b> pre </b> <br>
-	* <b> pos </b> <br>
+	* <b> pos </b> It generates an array of users, songs and playlists <br>
 	*/
 	public Mcs(){
 		

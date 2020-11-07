@@ -1,7 +1,7 @@
 package model;
 
 public class Song{
-	
+	//Atributes
 	private String title;
 	private String artist;
 	private String date;
@@ -11,6 +11,16 @@ public class Song{
 	private Genre genre;
 	
 	//Methods
+	/**
+	* Song: It is the constructor of the Song class <br>
+	* <b> pre </b> the songGenre must be a string equal to one of the Genre enum types <br>
+	* <b> pos </b> <br>
+	* @param title Is the title of the song
+	* @param artist Is the artist name
+	* @param date Is the date in which the song was released
+	* @param songGenre Is the genre of the song
+	* @param duration is the duration of the song in integer secods
+	*/
 	public Song(String title, String artist, String date, String songGenre, int duration){
 		this.title=title;
 		this.artist=artist;
@@ -36,6 +46,12 @@ public class Song{
 		return genre;
 	}
 	
+	/**
+	* showGenre: It takes the enum value of genre and return a string with the same value but a different format <br>
+	* <b> pre </b> <br>
+	* <b> pos </b> <br>
+	* @return categoryS Is the same genre but displayed different
+	*/
 	public String showGenre(){
 		String categoryS="";
 		if(genre==Genre.ROCK){
@@ -54,6 +70,12 @@ public class Song{
 		return categoryS;
 	}//end showCategory
 	
+	/**
+	* getTime: It takes the current duration of the song and returns it into an specified format <br>
+	* <b> pre </b> <br>
+	* <b> pos </b> <br>
+	* @return message Is a message that shows the current song duration in a specified format
+	*/
 	public String getTime(){
 		int mins=0;
 		int segs=0;
@@ -72,6 +94,12 @@ public class Song{
 		return message;
 	}//end getTime
 	
+	/**
+	* showSong: It displays the informtion of the song <br>
+	* <b> pre </b> <br>
+	* <b> pos </b> <br>
+	* @return message Is the message with all the required information
+	*/
 	public String showSong(){
 						
 		String message=("\n************** Song **************"+

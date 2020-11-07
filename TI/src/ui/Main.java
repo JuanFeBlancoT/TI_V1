@@ -13,15 +13,16 @@ public class Main{
 		boolean menu=true;
 		
 		//Users control variables
-		int control=0; 
-		boolean valid=false;
+		int control=0; 					//amount of users created
+		boolean valid=false;			//validates if the user was created successfully or not in order to count it into control 
 		
 		//Songs control variables
-		int controlS=0;
+		int controlS=0;					//amount of songs created
+		boolean validS=false;			//validates if the song was added successfully or not in order to count it into controlS
 		
 		//Playlists control variables
-		int controlP=0;
-		boolean validP=false;
+		int controlP=0;					//amount of playlists created
+		boolean validP=false;			//validates if the playlist was created successfully or not in order to count it into controlP
 		
 		//Start program
 				
@@ -31,6 +32,7 @@ public class Main{
 		//MENU
 		
 		while(menu){
+			System.out.print("\n");
 			System.out.println("\n Welcome to Mcs prototype, please chose an option from below: "+
 			"\n 1) Create user"+
 			"\n 2) Show user(s)"+
@@ -47,27 +49,49 @@ public class Main{
 			switch(option){
 				
 				case 1:
-					System.out.println(control);
+				
 					if(control!=mcs1.MAX_USERS){
-						control+=createU(mcs1, control, valid);
-						System.out.println(control);
+						
+						valid=createUser(mcs1);
+						if(valid){
+						control++;
+							}
 					}else{
 						System.out.println("\nCant create more users");
 					}
-						/*control+=createU(mcs1, control, valid);
-						System.out.println(control);*/
+
 					break;
-				case 2:
+				case 2:		
 					showUsers(mcs1, control);
 					break;
 				case 3:
-					controlS+=addS(mcs1,control, controlS);		
+				
+					if(controlS!=mcs1.MAX_SONGS){
+						
+						validS=addSong(mcs1, control);
+						if(validS){
+						controlS++;
+							}
+					}else{
+						System.out.println("\nCant create more songs");
+					}
+					
 					break;
 				case 4:
 					showSongs(mcs1, controlS);
 					break;
 				case 5:
-					controlP=createP(mcs1, controlP);	
+					
+					if(controlP!=mcs1.MAX_PLAYLISTS){
+						
+						validP=createPlaylist(mcs1);
+						if(validP){
+						controlP++;
+							}
+					}else{
+						System.out.println("\nCant create more playlists");
+					}
+					
 					break;
 				case 6:
 					addSongToPlaylist(mcs1);
@@ -79,7 +103,7 @@ public class Main{
 					gradeP(mcs1);
 					break;
 				case 9:
-					System.out.println("\nBye");
+					System.out.println("\n**** Bye ****");
 					menu=false;
 					break;
 				default:
@@ -88,33 +112,7 @@ public class Main{
 			}
 		
 		}
-	
-		/*//1)create user
-		control+=createU(mcs1, control, valid);
-		
-		//2)showUsers
-		showUsers(mcs1, control);
-		
-		//3)addSong
-		controlS+=addS(mcs1,control, controlS);		
-		
-		//4)showSongs
-		showSongs(mcs1, controlS);
-		
-		//5)create playlist
-		controlP=createP(mcs1, controlP);	
-
-		//6)add song to playlist
-		addSongToPlaylist(mcs1);
-		
-		//7)show Playlists
-		showPlaylist(mcs1, controlP);
-		
-		//8)grade a playlist
-		gradeP(mcs1);
-		*/
-		
-		
+			
 	}//end main
 	
 	
@@ -130,73 +128,37 @@ public class Main{
 		Mcs mcsx=new Mcs();
 		return mcsx;
 	}//end createMcs
-	
-	/**
-	* createU: It asks the user how many user does he want to create and creates them <br>
-	* <b> pre </b> <br>
-	* <b> pos </b> <br>
-	* @param mcsx Is the Mcs from the package model that controls everything
-	* @param control Is the integer number that counts how many users were created 
-	* @param noMoreU Is a boolean that controls the while loop
-	* @param valid Is a boolean that validates if the username is already taken
-	* @return control Is the integer number that counts how many users were created 
-	*/
-	public static int createU(Mcs mcsx, int control, boolean valid){
-		
-		boolean noMoreU=false;
-			
-			while(noMoreU==false && control<mcsx.MAX_USERS){
-					String answer;
-					System.out.print("\nDo you want to create an user? yes or not: ");
-					answer=sc.nextLine();
-					if(answer.equalsIgnoreCase("yes")){
-						valid=createUser(mcsx);
-						if(valid==true){
-							control++;
-						}
-					}else{
-						noMoreU=true;
-					}
-				}
-				if(control==mcsx.MAX_USERS){
-					System.out.println("\nCant create more users\n");
-					
-				}
-		
-		
-		return control;
-	}
 		
 	/**
 	* createUser: It creates an user in the Mcs adding it to the users array <br>
-	* <b> pre </b> That the array of users is initialized<br>
+	* <b> pre </b> The array of users must be initialized<br>
 	* <b> pos </b> <br>
 	* @param mcsx Is the Mcs from the package model that controls everything
-	* @return valid It validates if the username is already taken
+	* @return valid It validates if the user was created successfully or not
 	*/
 	public static boolean createUser(Mcs mcsx){
 		String messagex;
-		boolean valid=true;
+		boolean valid=false;
 		
 		System.out.print("Type your user name, without spaces: ");
 		String name=sc.nextLine();
-		//validar cadena
+		
 		System.out.print("Type your password: ");
 		String password=sc.nextLine();
 		System.out.print("Type your age: ");
 		String age=sc.nextLine();
 		
 		//validate name without " "
-		boolean validName=mcsx.validName(name);
-		if(validName==true){
+		boolean invalidName=mcsx.validName(name);
+		if(invalidName==true){
 			System.out.println("\nInvalid name, remeber that it has no spaces");
-			valid=false;
 		}else{
 			//validate if name isnt already taken
 			boolean exist=mcsx.findUser(name);
 			if(exist==false){
 				messagex= mcsx.createUser(name,password,age);
 				System.out.println("\n"+messagex);
+				valid=true;
 			}else{
 				System.out.println("\nName already taken. Try another one");
 				valid=false;
@@ -207,11 +169,11 @@ public class Main{
 	}//end createUser
 	
 	/**
-	* showUsers: It shows all created users <br>
-	* <b> pre </b> <br>
+	* showUsers: It shows all created users by asking other methods for a message with the specified data <br>
+	* <b> pre </b> There must be at least one user created <br>
 	* <b> pos </b> <br>
 	* @param mcsx Is the Mcs from the package model that controls everything
-	* @param totUsers The integer number that represents how many users were created 
+	* @param totUsers The integer number that represents how many users exist
 	*/
 	public static void showUsers(Mcs mcsx, int totUsers){
 		for(int i=0;i<totUsers;i++){
@@ -220,38 +182,19 @@ public class Main{
 			System.out.println(messagex);
 		}
 	}//end showSongs
-	
-	public static int addS(Mcs mcsx, int control, int controlS){
 		
-		boolean noMoreS=false;
-		
-		while(noMoreS==false && controlS<mcsx.MAX_SONGS){
-			String answerS;
-			System.out.print("\nDo you want to add a song? yer or not: ");
-			answerS=sc.nextLine();
-			if(answerS.equalsIgnoreCase("yes")){
-				addSong(mcsx, control);
-				controlS++;
-			}else{
-				noMoreS=true;
-			}
-		}
-		if(controlS==mcsx.MAX_SONGS){
-			System.out.println("\nCant add more songs\n");
-			controlS=0;
-		}
-		return controlS;
-	}// end addS
-	
-	
 	/**
 	* addSong: It creates a new song and add it to the pool array <br>
 	* <b> pre </b> The array onf songs, called pool, must be initialized<br>
 	* <b> pos </b> <br>
 	* @param mcsx Is the Mcs from the package model that controls everything
-	* @param control Is the integer number that contains the mount of users that were created, it is used to determine if we can or not ask for the user that uploads the song 
+	* @param control Is the integer number that contains the mount of users that exist, it is used to determine if we can or not ask for the user that uploads the song 
+	* @return created validates if the song was created successfully or not
 	*/
-	public static void addSong(Mcs mcsx, int control){
+	public static boolean addSong(Mcs mcsx, int control){
+		
+		boolean created=false;
+		
 		String messagex;
 		System.out.print("\n");
 		System.out.print("Type the song title: ");
@@ -298,18 +241,20 @@ public class Main{
 		//actually creates the song here
 		messagex=mcsx.addSong(title,artist,date, s_genre,duration);
 		System.out.print(messagex);
+		created=true;
 		
 		if(control!=0){
 			System.out.print("\nWhich user is gonna upload the song? Type de username: ");
 			String uploader=sc.nextLine();
 			mcsx.updateCategory(uploader);
 		}
-			
+		
+		return created;
 	}//end song
 	
 	/**
-	* showSongs: It shows all songs in the pool array <br>
-	* <b> pre </b> <br>
+	* showSongs: It shows all songs in the pool array by asking other methods for a message with the specified data <br>
+	* <b> pre </b> There must be at least one song created <br>
 	* <b> pos </b> <br>
 	* @param mcsx Is the Mcs from the package model that controls everything
 	* @param totSongs Is the  integer number that contains the amount of songs created
@@ -322,40 +267,22 @@ public class Main{
 		}
 	}//end showSongs
 	
-	public static int createP(Mcs mcsx, int controlP){
-		
-		boolean noMoreP=false;
-		
-		while(noMoreP==false && controlP<mcsx.MAX_PLAYLISTS){
-			String answerP;
-			System.out.print("\nDo you want to add a playlist? yer or not: ");
-			answerP=sc.nextLine();
-			if(answerP.equalsIgnoreCase("yes")){
-				controlP+=createPlaylist(mcsx);
-			}else{
-				noMoreP=true;
-			}
-		}
-		if(controlP==mcsx.MAX_SONGS){
-			System.out.println("\nCant add more playlists\n");
-			controlP=0;
-		}
-		return controlP;
-	}
-	
 	/**
 	* createPlaylist: It creates a playlist in the Mcs adding it to the collection array <br>
-	* <b> pre </b> That the array collection is initialized<br>
+	* <b> pre </b> The array collection must be initialized<br>
 	* <b> pos </b> <br>
 	* @param mcsx Is the Mcs from the package model that controls everything
-	* @return created Is an integer number that allow other methods to keep track of how many playlists are been created
+	* @return created validates if the playlist was created successfully or not
 	*/
-	public static int createPlaylist(Mcs mcsx){
+	public static boolean createPlaylist(Mcs mcsx){
 		final int MAX_RU=5;
+		//keep is a condition for adding more usernames to the restricted playklist
 		boolean keep=false;
 		String answer="";
 		String messagex="";
-		int created=0;
+		boolean created=false;
+		//validates if the strings in the restricted playlist are pointing a real user
+		boolean exists=false;
 		
 		System.out.print("\nType the playlist name: ");
 		String name=sc.nextLine();
@@ -373,7 +300,7 @@ public class Main{
 				boolean exist=mcsx.findUser(userName);
 				if(exist){
 					messagex=mcsx.createPlaylist(mcsx.MAX_SONGS, name, userName);
-					created++;
+					created=true;
 				}else{
 						System.out.print("\nThis user does not exist. Cant create playlist: ");
 				}
@@ -381,29 +308,45 @@ public class Main{
 			break;
 			case 2:
 				String userNames[]=new String[MAX_RU];
+				String singleUserName="";
 				
 				System.out.print("\nType the usernames of the users that will have access to this playlist: ");
 				for(int i=0;i<MAX_RU && !keep;i++){
 					System.out.print("\nType the "+(i+1)+" username : ");
-					userNames[i]=sc.nextLine();
-					if(i<4){
-						System.out.print("Add another user to the playlist? yes or not: ");
-						answer=sc.nextLine();
-					}
-					if(!(answer.equalsIgnoreCase("yes"))){
+					singleUserName=sc.nextLine();
+					
+					//verificate if the typed user actually exists 
+					exists=mcsx.findUser(singleUserName);
+					if(exists){
+						userNames[i]=sc.nextLine();
+						
+						if(i<4){
+							System.out.print("Add another user to the playlist? yes or not: ");
+							answer=sc.nextLine();
+						}
+						if(!(answer.equalsIgnoreCase("yes"))){
+							keep=true;
+						}
+						if(i==(MAX_RU-1)){
+							System.out.print("\nCant add more users to this playlist");
+							keep=true;
+						}
+					}else{
+						System.out.print("\nThis user does not exist. Cant create playlist, please try again ");
 						keep=true;
 					}
-					if(i==(MAX_RU-1)){
-						System.out.print("\nCant add more users to this playlist");
-						keep=true;
-					}
+					
 				}
-				messagex=mcsx.createPlaylist(mcsx.MAX_SONGS, name, userNames);
-				created++;
+				if(exists!=false){
+					
+					messagex=mcsx.createPlaylist(mcsx.MAX_SONGS, name, userNames);
+					created=true;
+				}
+				
 			break;
 			case 3:
 				messagex=mcsx.createPlaylist(mcsx.MAX_SONGS, name);
-				created++;
+				created=true;
 			break;
 		}
 		System.out.print(messagex);
@@ -448,16 +391,12 @@ public class Main{
 	
 	/**
 	* gradeP: It allows the user to rate a playlist <br>
-	* <b> pre </b> <br>
+	* <b> pre </b> There must be at least one public playlist created <br>
 	* <b> pos </b> <br>
 	* @param mcsx Is the Mcs from the package model that controls everything
 	*/
 	public static void gradeP(Mcs mcsx){
 
-		System.out.print("\nDo you want to grade a playlist? yes or not : ");
-		String answer=sc.nextLine();
-		
-		if(answer.equalsIgnoreCase("yes")){
 			System.out.print("Type the name of the public playlist: ");
 			String playlistName=sc.nextLine();
 			int playIndex=mcsx.findPlaylist(playlistName);
@@ -478,12 +417,11 @@ public class Main{
 				System.out.print("Not a public playlist");
 			}
 			
-		}
 	}//end gradeP
 	
 		/**
 	* showPlaylist: It shows all the playlist that were created <br>
-	* <b> pre </b> <br>
+	* <b> pre </b> There must be at least one playlist created <br>
 	* <b> pos </b> <br>
 	* @param mcsx Is the Mcs from the package model that controls everything
 	* @param totPlaylists Is the integer number that contains the amount of playlists that were created
